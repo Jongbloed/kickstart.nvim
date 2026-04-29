@@ -149,6 +149,7 @@ local function toggle_side_terminal()
         vim.api.nvim_win_hide(win)
       else
         vim.api.nvim_set_current_win(win)
+        vim.cmd 'startinsert'
       end
       return
     end
@@ -159,12 +160,15 @@ local function toggle_side_terminal()
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
     if vim.bo[buf].buftype == 'terminal' then
       vim.cmd('vsplit | buffer ' .. buf)
+
+      vim.cmd 'startinsert'
       return
     end
   end
 
   -- no existing terminal buffer
   vim.cmd 'vsplit | terminal'
+  vim.cmd 'startinsert'
 end
 
 vim.keymap.set('n', '<leader>`', toggle_side_terminal)
