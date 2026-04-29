@@ -168,10 +168,36 @@ vim.o.confirm = true
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
-
--- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+vim.keymap.set('n', '<leader>`', function()
+  -- find open window with terminal buffer and jump there
+  local wins = vim.api.nvim_list_wins()
+  for _, win in ipairs(wins) do
+    local bufferInWindow = vim.api.nvim_win_get_buf(win)
+    if vim.bo[bufferInWindow].buftype == 'terminal' then
+      if vim.api.nvim_get_current_win() == win then
+        vim.api.nvim_win_hide(win)
+      else
+        vim.api.nvim_set_current_win(win)
+      end
+      return
+    end
+  end
+
+  -- find existing terminal buffer that's not in a window
+  -- and split a window for it
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.bo[buf].buftype == 'terminal' then
+      vim.cmd('vsplit | buffer ' .. buf)
+      return
+    end
+  end
+
+  -- no existing terminal buffer
+  vim.cmd 'vsplit | terminal'
+end)
 
 -- Diagnostic Config & Keymaps
 -- See :help vim.diagnostic.Opts
