@@ -139,7 +139,7 @@ vim.o.confirm = true
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
-function toggle_side_terminal()
+local function toggle_side_terminal()
   -- find open window with terminal buffer and jump there
   local wins = vim.api.nvim_list_wins()
   for _, win in ipairs(wins) do
@@ -824,7 +824,7 @@ require('lazy').setup({
     ---@diagnostic disable-next-line: missing-fields
     opts = { signs = false },
   },
-  { 'ThePrimeagen/vim-be-good' },
+  { 'Jongbloed/vim-be-good-fork' },
   {
     'ThePrimeagen/harpoon',
     branch = 'harpoon2',
