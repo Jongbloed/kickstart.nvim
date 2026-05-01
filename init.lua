@@ -171,7 +171,7 @@ local function toggle_side_terminal()
   vim.cmd 'startinsert'
 end
 
-vim.keymap.set('n', '<leader>`', toggle_side_terminal)
+vim.keymap.set('n', '<leader>`', toggle_side_terminal, { desc = 'Toggle side terminal' })
 
 -- Diagnostic Config & Keymaps
 -- See :help vim.diagnostic.Opts
